@@ -4,8 +4,8 @@ namespace AlgLab3
 {
     public class LinkedList<T> : IEnumerable<T>  
     {
-        Node<T> head; 
-        Node<T> tail; 
+        private Node<T> head; 
+        private Node<T> tail; 
         int count; 
 
         public void Add(T data)
