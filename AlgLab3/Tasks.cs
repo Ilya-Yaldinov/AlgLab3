@@ -58,5 +58,27 @@ namespace AlgLab3
                 Console.Error.WriteLine(e.Message);
             }
         }
+
+        public static void ListTask()
+        {
+            int max = int.MinValue;
+            string s = "";
+            LinkedList<string> list = new LinkedList<string>() { "cat", "dog", "rat", "parrot", "hamster" };
+            LinkedList<string> result = new LinkedList<string>();
+
+            foreach (var i in list)
+                max = i.Length > max ? i.Length : max;
+
+            foreach (var i in list)
+            {
+                s = i;
+                if (i.Length < max)
+                    for (int j = 0; j < max - i.Length; j++)
+                        s = s.Insert(0, "_");
+                result.Add(s);
+            }
+            foreach (var i in result)
+                Console.Write($"{i} ");
+        }
     }
 }
