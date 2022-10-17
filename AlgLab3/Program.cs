@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
 
 namespace AlgLab3
 {
@@ -6,8 +6,8 @@ namespace AlgLab3
     {
         public static void Main()
         {
-            Tasks tasks = new Tasks();
-            tasks.QueueTask();
+            MyQueue<string> queue = new MyQueue<string>();
+            queue.ReadFromFile();
         }
     }
 }

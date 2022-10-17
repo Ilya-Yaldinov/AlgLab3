@@ -4,8 +4,8 @@ namespace AlgLab3
 {
     public class LinkedList<T> : IEnumerable<T>  
     {
-        Node<T> head; 
-        Node<T> tail; 
+        private Node<T> head; 
+        private Node<T> tail; 
         int count; 
 
         public void Add(T data)
@@ -97,6 +97,269 @@ namespace AlgLab3
                 yield return current.Data;
                 current = current.Next;
             }
+        }
+
+        public void Reverse()
+        {
+            Node<T> current = head;
+            Node<T> next = null;
+            Node<T> previous = null;
+
+            while (current != null)
+            {
+                next = current.Next;
+                current.Next = previous;
+                previous = current;
+                current = next;
+            }
+            head = previous;
+        }
+
+        public void MoveFirstOrLast(int command)
+        {
+            if (count > 0)
+            {
+                Node<T> node;
+                if (command == 0)
+                {
+                    Node<T> current = head;
+                    Node<T> previous = null;
+
+                    node = new Node<T>(tail.Data);
+                    node.Next = head;
+                    head = node;
+                    if (count == 0)
+                        tail = head;
+
+                    while (current != null)
+                    {
+                        if (current.Data.Equals(tail.Data))
+                        {
+                            previous.Next = current.Next;
+                            if (current.Next == null)
+                                tail = previous;
+                        }
+                        previous = current;
+                        current = current.Next;
+                    }
+                }
+
+                if (command == 1)
+                {
+                    node = new Node<T>(head.Data);
+                    tail.Next = node;
+                    tail = node;
+                    if (count == 0)
+                        head = tail;
+                    head = head.Next;
+                }
+            }  
+        }
+
+        public int CountDifferentNumbers()
+        {
+            Node<T> current = head;
+            Dictionary<T,bool> contained = new Dictionary<T,bool>();
+            int countNumbers = 0;
+
+            while (current != null)
+            {
+                if (!contained.ContainsKey(current.Data))
+                {
+                    contained.Add(current.Data, true);
+                    countNumbers++;
+                }
+                current = current.Next;
+            }
+
+            return countNumbers;
+        }
+
+        public void DeleteSecondRepeatNumber()
+        {
+            Node<T> current = head;
+            Node<T> previous = null;
+            Dictionary<T, bool> contained = new Dictionary<T, bool>();
+
+            while (current != null)
+            {
+                if (!contained.ContainsKey(current.Data))
+                {
+                    contained.Add(current.Data, true);
+                    previous = current;
+                }
+                else
+                {
+                    if (current.Next == null)
+                        tail = previous;
+                    previous.Next = current.Next;
+                    count--;
+                }
+                current = current.Next;
+            }
+        }
+
+        public void InsertMyselfAfterNumber(int x)
+        {
+            Node<T> current = head;
+            Node<T> previous = null;
+            int countOld = count;
+            int countNum = 0;
+
+            while (current != null)
+            {
+                if (previous != null && previous.Data.Equals(x))
+                {
+                    Node<T> beforeX = head;
+                    int before = countNum;
+                    Node<T> newCurrent = new Node<T>(beforeX.Data);
+                    for (int i = 0; i < before; i++)
+                    {
+                        AddAt(beforeX.Data,countNum);
+                        countNum++;
+                        beforeX = beforeX.Next;
+                    }
+                    Node<T> afterX = current;
+                    newCurrent = new Node<T>(afterX.Data);
+                    for (int i = countNum; i < countOld + 3; i++)
+                    {
+                        AddAt(afterX.Data, i);
+                        afterX = afterX.Next;
+                    }
+                }
+                countNum++;
+                previous = current;
+                current = current.Next;
+            }
+        }
+
+        public void AddAt(T data, int n)
+        {
+            Node<T> current = head;
+            Node<T> previous = null;
+            Node<T> newData = new Node<T>(data);
+            int countNum = 0;
+
+            if (head == null)
+            {
+                head = newData;
+                return;
+                count++;
+            }
+            if (n == 0)
+            {
+                newData.Next = head;
+                head = newData;
+                count++;
+                return;
+            }
+            if (n == count)
+            {
+                tail.Next = newData;
+                tail = newData;
+                count++;
+                return;
+            }
+            while (current != null && countNum < count)
+            {
+                if (countNum == n)
+                {
+                    previous.Next = newData;
+                    newData.Next = current;
+                    count++;
+                    return;
+                }
+                countNum++;
+                previous = current;
+                current = current.Next;
+            }    
+        }
+
+        public void InsertFBeforeE(T e,T data)
+        {
+            Node<T> current = head;
+            Node<T> previous = null;
+            Node<T> newData = new Node<T>(data);
+
+            while (current != null)
+            {
+                if (previous != null && current.Data.Equals(e))
+                {
+                    previous.Next = newData;
+                    newData.Next = current;
+                    count++;
+                    return;
+                }
+                else if (current.Data.Equals(e))
+                {
+                    newData.Next = head;
+                    head = newData;
+                    count++;
+                    return;
+                }
+                previous = current;
+                current = current.Next;
+            }
+        }
+
+        public void DeleteIfEqual(T data)
+        {
+            Node<T> current = head;
+            Node<T> previous = null;
+
+            while (current != null)
+            {
+                if (previous != null && current.Data.Equals(data))
+                {
+                    if (current.Next == null)
+                        tail = previous;
+                    previous.Next = current.Next;
+                    count--;
+                }
+                else if (current.Data.Equals(data))
+                {
+                    head = current.Next;
+                    current = head;
+                    count--;
+                }
+                else
+                {
+                    previous = current;
+                }
+
+                current = current.Next;
+            }
+        }
+
+        public void InsertInOrder(T data)
+        {
+            Node<T> current = head;
+            Node<T> previous = null;
+            Node<T> newData = new Node<T>(data);
+
+            while (current != null)
+            {
+                previous = current;
+                current = current.Next;
+            }
+        }
+
+        public void DoublingList()
+        {
+            Node<T> current = head;
+            int countOld = count;
+
+            for (int i = 0; i < countOld; i++)
+            {
+                AddAt(current.Data, i);
+                current = current.Next;
+            }
+        }
+
+        public void ChangeTwoElements(int one, int two)
+        {
+
+
         }
     }
 }
