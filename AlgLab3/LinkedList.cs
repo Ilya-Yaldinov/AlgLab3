@@ -358,8 +358,34 @@ namespace AlgLab3
 
         public void ChangeTwoElements(int one, int two)
         {
+            Node<T> current = head;
+            Node<T> newOne = null;
+            Node<T> newTwo = null;
+            Node<T> tmp;
+            int countOne = 0;
+            int countTwo = 0;
+            int count = 0;
 
-
+            while (current != null)
+            {
+                if (count == one)
+                {
+                    newOne = current;
+                }
+                if (count == two)
+                {
+                    newTwo = current;
+                }
+                if (newOne != null && newTwo != null)
+                {
+                    tmp = new Node<T>(newOne.Data);
+                    newOne.Data = newTwo.Data;
+                    newTwo.Data = tmp.Data;
+                    return;
+                }
+                count++;
+                current = current.Next;
+            }
         }
     }
 }
