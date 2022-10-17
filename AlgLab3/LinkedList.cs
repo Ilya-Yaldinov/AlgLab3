@@ -1,12 +1,20 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 
 namespace AlgLab3
 {
-    public class LinkedList<T> : IEnumerable<T>  
+    public class LinkedList<T> : IEnumerable<T>
     {
-        private Node<T> head; 
-        private Node<T> tail; 
-        int count; 
+        private Node<T> head;
+        private Node<T> tail;
+        int count;
+
+        public LinkedList() { }
+
+        public LinkedList(T head)
+        {
+            Add(head);
+        }
 
         public void Add(T data)
         {
@@ -273,6 +281,45 @@ namespace AlgLab3
                 previous = current;
                 current = current.Next;
             }    
+        }
+
+        public void AppendList(IEnumerable<T> items)
+        {
+            if (items.Count() == 0) return;
+            foreach (T item in items)
+            {
+                Add(item);
+            }
+        }
+
+        public LinkedList<T> DivideListByNumber(T data)
+        {
+            Node<T> current = head;
+            Node<T> item = null;
+            while (current != null)
+            {
+                if (current.Data.Equals(data))
+                {
+                    return DivideHelper(current);
+                }
+                    
+                current = current.Next;
+            }
+            return new LinkedList<T>();
+        }
+
+        private LinkedList<T> DivideHelper(Node<T> current)
+        {
+            LinkedList<T> list = new LinkedList<T>();
+            Node<T> item = null;
+            while (current != null)
+            {
+                list.Add(current.Data);
+                item = current;
+                current = current.Next;
+                Remove(item.Data);
+            }
+            return list;
         }
 
         public void InsertFBeforeE(T e,T data)

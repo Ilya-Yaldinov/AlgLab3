@@ -32,8 +32,8 @@ namespace AlgLab3
         {
             try
             {
-                Queue more = new Queue();
-                Queue less = new Queue();
+                MyQueue<Person> more = new MyQueue<Person>();
+                MyQueue<Person> less = new MyQueue<Person>();
                 StreamReader inp = new StreamReader("members.txt"); 
                 while (!inp.EndOfStream)
                 {
@@ -41,17 +41,8 @@ namespace AlgLab3
                     if (person.Salary >= 10000) more.Enqueue(person); 
                     else less.Enqueue(person);
                 }
-
-                foreach (var i in less)
-                {
-                    Console.WriteLine(i);
-                }
-
-                foreach (var i in more)
-                {
-                    Console.WriteLine(i);
-                }
-
+                less.Show();
+                more.Show();
             }
             catch (Exception e)
             {
