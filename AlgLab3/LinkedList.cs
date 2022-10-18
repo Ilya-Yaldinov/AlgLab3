@@ -322,6 +322,11 @@ namespace AlgLab3
             return list;
         }
 
+        public void ListAppendOrderBy(IEnumerable<T> items)
+        {
+
+        }
+
         public void InsertFBeforeE(T e,T data)
         {
             Node<T> current = head;

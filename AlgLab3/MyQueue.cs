@@ -26,7 +26,7 @@ namespace AlgLab3
             if (head == null)
             {
                 Console.WriteLine("\nQueue Underflow");
-                Environment.Exit(0);
+                return;
             }
             Console.WriteLine($"Removing {head.Data}");
             head = head.Next;
@@ -69,12 +69,6 @@ namespace AlgLab3
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
-        }
-
-        public void ReadFromFile()
-        {
-            FileWorker file = new FileWorker("test.txt");
-            file.WorkForQueue();
         }
     }
 }
