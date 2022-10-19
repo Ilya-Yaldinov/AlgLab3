@@ -27,7 +27,6 @@ namespace AlgLab3
                 Console.WriteLine("\nStack Underflow");
                 Environment.Exit(0);
             }
-
             T poppableTop = top.Data;
             Console.WriteLine($"Removing {poppableTop}");
             top = top.Next;

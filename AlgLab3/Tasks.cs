@@ -28,6 +28,29 @@ namespace AlgLab3
     }
     public class Tasks
     {
+       private class BinaryNode
+       {
+            public BinaryNode Right;
+            public BinaryNode Left;
+
+            public KeyValuePair<BinaryNode, int> FindDeepestChild()
+            {
+                var left = new KeyValuePair<BinaryNode, int>(this, 0);
+                var right = new KeyValuePair<BinaryNode, int>(this, 0);
+
+                if (Left != null)
+                    left = Left.FindDeepestChild();
+
+                if (Right != null)
+                    right = Right.FindDeepestChild();
+
+                if (left.Value > right.Value)
+                    return new KeyValuePair<BinaryNode, int>(left.Key, left.Value + 1);
+                else
+                    return new KeyValuePair<BinaryNode, int>(right.Key, right.Value + 1);
+            }
+       }
+
         public void QueueTask()
         {
             try
@@ -70,6 +93,33 @@ namespace AlgLab3
             }
             foreach (var i in result)
                 Console.Write($"{i} ");
+        }
+
+        public static void StackWork()
+        {
+            Dictionary<int, int> dictionary = new Dictionary<int, int>();
+            MyStack<string> passengers = new MyStack<string>();
+            MyStack<KeyValuePair<int, int>> seatsIntra = new MyStack<KeyValuePair<int, int>>();
+            MyStack<KeyValuePair<int, int>> seatsExtra = new MyStack<KeyValuePair<int, int>>();
+            FileWorker file = new FileWorker("stackWork.txt");
+            var input = file.FileRead();
+            int n = int.Parse(input[0]);
+            for (int i = 1; i < n + 1; i++) dictionary.Add(i, int.Parse(input[i]));
+            dictionary = dictionary.OrderBy(pair => pair.Value).Reverse().ToDictionary(pair => pair.Key, pair => pair.Value);
+            foreach (var pair in dictionary) seatsIntra.Push(pair);
+            for (int i = input.Length - 1; i > n; i--) passengers.Push(input[i]);
+            Console.WriteLine("HELP ");
+            while (!passengers.IsEmpty)
+            {
+                string passenger = passengers.Pop();
+                if (passenger == "0")
+                {
+                    Console.WriteLine($"Introvert take seat on {seatsIntra.Top().Key} row ");
+                    seatsExtra.Push(seatsIntra.Pop());
+                }
+                if (passenger == "1")
+                    Console.WriteLine($"Extravert take seat on {seatsExtra.Pop().Key} row with introvert");
+            }
         }
     }
 }

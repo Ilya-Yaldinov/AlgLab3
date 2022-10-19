@@ -46,7 +46,7 @@ namespace AlgLab3
             }
         }
 
-        public void TimeCheckForMyQueue(string fileName)
+        public void TimeCheck(string fileName)
         {
             List<string> list = new List<string>();
             StringBuilder sb = new StringBuilder();
@@ -62,7 +62,7 @@ namespace AlgLab3
             /*for (int i = 0; i < file.Length; i += 10)
             {
                 sw.Start();
-                WorkForQueue(new ArraySegment<string>(file, 1, i));
+                WorkForStack(new ArraySegment<string>(file, 1, i));
                 sb.Append($"{i};{sw.Elapsed.TotalMilliseconds}");
                 sw.Stop();
                 list.Add(sb.ToString());
@@ -71,9 +71,10 @@ namespace AlgLab3
             File.WriteAllLines($"{fileName}.csv", list);
         }
 
-        public void WorkForStack(ArraySegment<string> commands)
+        public void WorkForStack()
         {
             MyStack<string> stack = new MyStack<string>();
+            var commands = FileRead();
             foreach (string command in commands)
             {
                 switch (command[0])
@@ -86,10 +87,12 @@ namespace AlgLab3
                         stack.Pop();
                         break;
                     case '3':
-                        Console.WriteLine(stack.Top());
+                        var top = stack.Top();
+                        Console.WriteLine(top);
                         break;
                     case '4':
-                        Console.WriteLine(stack.IsEmpty);
+                        bool isEmpty = stack.IsEmpty;
+                        Console.WriteLine(isEmpty);
                         break;
                     case '5':
                         stack.Print();

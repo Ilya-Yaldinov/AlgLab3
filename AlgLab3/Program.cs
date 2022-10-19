@@ -6,8 +6,8 @@ namespace AlgLab3
     {
         public static void Main()
         {
-            FileWorker fileWorker = new FileWorker("test4.txt");
-            fileWorker.TimeCheckForMyQueue("test4");
+            FileWorker fileWorker = new FileWorker("testStack4.txt");
+            fileWorker.TimeCheck("testStack4(memory)");
         }
     }
 }
