@@ -26,7 +26,6 @@ namespace AlgLab3
             return list;
         }
 
-        public void WorkForQueue()
         public void WorkForQueue(ArraySegment<string> commands)
         {
             MyQueue<string> queue = new MyQueue<string>();
