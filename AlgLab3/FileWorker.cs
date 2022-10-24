@@ -13,6 +13,15 @@
             return File.ReadAllText(path).Split(" ");
         }
 
+        public static LinkedList<Song> FileRead(string path)
+        {
+            string[] file = File.ReadAllLines(path);
+            LinkedList<Song> list = new LinkedList<Song>();
+            foreach (string line in file)
+                list.Add(new Song(line.Split("|")));
+            return list;
+        }
+
         public void WorkForQueue()
         {
             MyQueue<string> queue = new MyQueue<string>();

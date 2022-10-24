@@ -44,7 +44,7 @@ namespace AlgLab3
 
         public override string ToString()
         {
-            return $"{this.Name} {this.Author} {this.Album} {this.Genre}";
+            return $"Название:{this.Name.PadRight(25)} Исполнитель:{this.Author.PadRight(25)} Альбом:{this.Album.PadRight(35)} Жанр:{this.Genre}";
         }
     }
 
@@ -81,26 +81,46 @@ namespace AlgLab3
             }
         }
 
-        public static void ListTask()
+        public static void ListTask(string genre)
         {
-            int max = int.MinValue;
-            string s = "";
-            LinkedList<string> playlist = new LinkedList<string>() { "cat", "dog", "rat", "parrot", "hamster" };
-            LinkedList<string> result = new LinkedList<string>();
+            LinkedList<Song> playlist = FileWorker.FileRead("Playlist.txt");
+            LinkedList<Song> sortedPlaylist = new LinkedList<Song>();
 
-            foreach (var i in list)
-                max = i.Length > max ? i.Length : max;
+            foreach (var i in playlist)
+                Console.WriteLine($"{i}");
 
-            foreach (var i in list)
+            foreach (var i in playlist)
+                if (i.Genre == genre)
+                    sortedPlaylist.Add(i);
+
+            for (int j = 0; j < sortedPlaylist.Count; j++)
             {
-                s = i;
-                if (i.Length < max)
-                    for (int j = 0; j < max - i.Length; j++)
-                        s = s.Insert(0, "_");
-                result.Add(s);
+                for (int song = 0; song < sortedPlaylist.Count - 1; song++)
+                {
+                    bool nameHigher = true;
+                    int minLength = Math.Min(sortedPlaylist.ElementAt(song).Name.Length, sortedPlaylist.ElementAt(song + 1).Name.Length);
+                    int i = 0;
+                    while (nameHigher)
+                    {
+                        if (sortedPlaylist.ElementAt(song).Name[i] > sortedPlaylist.ElementAt(song + 1).Name[i])
+                        {
+                            sortedPlaylist.ChangeTwoElements(song, song + 1);
+                            nameHigher = false;
+                            i = 0;
+                        }
+                        if (sortedPlaylist.ElementAt(song).Name[i] < sortedPlaylist.ElementAt(song + 1).Name[i])
+                        {
+                            nameHigher = false;
+                            i = 0;
+                        }
+                        i++;
+                    }
+                }
             }
-            foreach (var i in result)
-                Console.Write($"{i} ");
+
+            Console.WriteLine($"\nРезультат поиска с фильтром '{genre}'");
+            foreach (var i in sortedPlaylist)
+                Console.WriteLine($"{i}");
         }
     }
 }
