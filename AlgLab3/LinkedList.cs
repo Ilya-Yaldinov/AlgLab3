@@ -336,9 +336,38 @@ namespace AlgLab3
             Node<T> current = head;
             Node<T> previous = null;
             Node<T> newData = new Node<T>(data);
+            int mData;
+            int cNum;
+            int pNum = int.MinValue;
+            int.TryParse(Convert.ToString(data), out mData);
 
             while (current != null)
             {
+                int.TryParse(Convert.ToString(current.Data), out cNum);
+                if (previous != null)
+                    int.TryParse(Convert.ToString(previous.Data), out pNum);
+
+                if (previous != null && mData >= pNum && mData <= cNum)
+                {
+                    previous.Next = newData;
+                    newData.Next = current;
+                    count++;
+                    return;
+                }
+                else if (mData <= cNum)
+                {
+                    newData.Next = head;
+                    head = newData;
+                    count++;
+                    return;
+                }
+                if (previous != null && mData >= pNum && mData >= cNum && current == tail )
+                {
+                    tail.Next = newData;
+                    tail = newData;
+                    count++;
+                    return;
+                }
                 previous = current;
                 current = current.Next;
             }
@@ -384,6 +413,16 @@ namespace AlgLab3
                     return;
                 }
                 count++;
+                current = current.Next;
+            }
+        }
+
+        public void Print()
+        {
+            Node<T> current = head;
+            while (current != null)
+            {
+                Console.Write($"{current.Data} ");
                 current = current.Next;
             }
         }

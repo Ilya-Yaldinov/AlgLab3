@@ -26,6 +26,28 @@ namespace AlgLab3
             return $"{this.FirstName} {this.SecondName} {this.Patronymic} {this.Sex} {this.Age} {this.Salary}";
         }
     }
+
+    public class Song
+    {
+        public string Name { get; private set; }
+        public string Album { get; private set; }
+        public string Genre { get; private set; }
+        public string Author { get; private set; }
+
+        public Song(string[] arr)
+        {
+            this.Name   = arr[0];
+            this.Author = arr[1];
+            this.Album  = arr[2];
+            this.Genre  = arr[3];
+        }
+
+        public override string ToString()
+        {
+            return $"{this.Name} {this.Author} {this.Album} {this.Genre}";
+        }
+    }
+
     public class Tasks
     {
         public void QueueTask()
@@ -63,7 +85,7 @@ namespace AlgLab3
         {
             int max = int.MinValue;
             string s = "";
-            LinkedList<string> list = new LinkedList<string>() { "cat", "dog", "rat", "parrot", "hamster" };
+            LinkedList<string> playlist = new LinkedList<string>() { "cat", "dog", "rat", "parrot", "hamster" };
             LinkedList<string> result = new LinkedList<string>();
 
             foreach (var i in list)
