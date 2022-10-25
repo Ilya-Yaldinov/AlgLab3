@@ -9,7 +9,7 @@ namespace AlgLab3
         public string Patronymic { get; private set; }
         public string Sex { get; private set; }
         public int Age { get; private set; }
-        public int Salary { get; private set; }
+        public string Time { get; private set; }
 
         public Person(string[] arr) 
         {
@@ -18,12 +18,12 @@ namespace AlgLab3
             this.Patronymic = arr[2];
             this.Sex = arr[3];
             this.Age = int.Parse(arr[4]);
-            this.Salary = int.Parse(arr[5]);
+            this.Time = arr[5];
         }
 
         public override string ToString()
         {
-            return $"{this.FirstName} {this.SecondName} {this.Patronymic} {this.Sex} {this.Age} {this.Salary}";
+            return $"{this.FirstName} {this.SecondName} {this.Patronymic} {this.Sex} {this.Age} {this.Time}";
         }
     }
     public class Tasks
@@ -55,17 +55,18 @@ namespace AlgLab3
         {
             try
             {
-                MyQueue<Person> more = new MyQueue<Person>();
-                MyQueue<Person> less = new MyQueue<Person>();
+                MyQueue<Person> am = new MyQueue<Person>();
+                MyQueue<Person> pm = new MyQueue<Person>();
                 StreamReader inp = new StreamReader("members.txt"); 
                 while (!inp.EndOfStream)
                 {
-                    Person person = new Person(inp.ReadLine().Split(", "));  
-                    if (person.Salary >= 10000) more.Enqueue(person); 
-                    else less.Enqueue(person);
+                    Person person = new Person(inp.ReadLine().Split(", "));
+                    var time = person.Time.Split(':');
+                    if (Convert.ToInt32(time[0]) <= 12) am.Enqueue(person); 
+                    else pm.Enqueue(person);
                 }
-                less.Show();
-                more.Show();
+                pm.Show();
+                am.Show();
             }
             catch (Exception e)
             {

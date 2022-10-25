@@ -46,13 +46,13 @@ namespace AlgLab3
             }
         }
 
-        public void TimeCheck(string fileName)
+        public void TimeCheck()
         {
             List<string> list = new List<string>();
             StringBuilder sb = new StringBuilder();
             Stopwatch sw = Stopwatch.StartNew();
             string[] file = FileRead();
-            for (int i = 0; i < file.Length; i += 10)
+            for (int i = 0; i < 20001; i += 10)
             {
                 WorkForQueue(new ArraySegment<string>(file, 1, i));
                 sb.Append($"{i};{(Process.GetCurrentProcess().WorkingSet64)}");
@@ -62,13 +62,13 @@ namespace AlgLab3
             /*for (int i = 0; i < file.Length; i += 10)
             {
                 sw.Start();
-                WorkForStack(new ArraySegment<string>(file, 1, i));
+                WorkForQueue(new ArraySegment<string>(file, 1, i));
                 sb.Append($"{i};{sw.Elapsed.TotalMilliseconds}");
                 sw.Stop();
                 list.Add(sb.ToString());
                 sb.Clear();
             }*/
-            File.WriteAllLines($"{fileName}.csv", list);
+            File.WriteAllLines($"stackTest15(memory).csv", list);
         }
 
         public void WorkForStack()
