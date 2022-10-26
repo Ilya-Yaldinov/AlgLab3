@@ -10,7 +10,7 @@ namespace AlgLab3
             //list.Print();
             //Console.WriteLine();
             //list.InsertInOrder(56);
-            //list.Print();
+            list.Print();
             Tasks.ListTask("Рэп");
         }
     }
